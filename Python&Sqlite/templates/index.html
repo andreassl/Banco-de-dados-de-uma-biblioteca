@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Biblioteca</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #004a9f; }
+        a.btn-adicionar {
+            font-size: 1.1em; 
+            margin-bottom: 20px; 
+            display: inline-block;
+            background-color: #004a9f;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a.btn-adicionar:hover { background-color: #003675; }
+
+        .livro { 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .livro-titulo { font-size: 1.2em; font-weight: bold; }
+        .livro-info { color: #555; }
+
+        .livro-botoes a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+        
+        a.btn-editar {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        a.btn-editar:hover {
+            background-color: #e0a800;
+        }
+
+        a.btn-excluir {
+            background-color: #dc3545;
+        }
+        a.btn-excluir:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Minha Biblioteca</h1>
+    
+    <a href="/adicionar" class="btn-adicionar">+ Adicionar Novo Livro</a>
+
+    {% for livro in livros %}
+        <div class="livro">
+            <div>
+                <div class="livro-titulo">{{ livro['titulo'] }}</div>
+                <div class="livro-info">
+                    Autor: {{ livro['autor'] }} | Ano: {{ livro['ano'] }}
+                </div>
+            </div>
+            
+            <div class="livro-botoes">
+                <a href="{{ url_for('editar', id=livro['id']) }}" 
+                   class="btn-editar">
+                   Editar
+                </a>
+                
+                <a href="{{ url_for('excluir', id=livro['id']) }}" 
+                   class="btn-excluir"
+                   onclick="return confirm('Tem certeza que deseja excluir este livro?');">
+                   Excluir
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <p>Nenhum livro encontrado no banco de dados.</p>
+    {% endfor %}
+
+</body>
+</html>
